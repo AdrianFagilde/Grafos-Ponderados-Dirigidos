@@ -85,20 +85,18 @@ int main()
     graph.insertVertex("B");
     graph.insertVertex("C");
     graph.insertVertex("D");
-
     graph.insertEdge("A","A",0);
-    graph.insertEdge("C","A",5);
-    graph.insertEdge("A","D",4);
-    graph.insertEdge("C","B",4);
+    graph.insertEdge("A","B",4);
     graph.insertEdge("B","D",4);
-    graph.searchEdge("A","A", wt);
-    if(graph.searchEdge("A","A", wt)){
-    	cout<<"encontrado";
-	}
-    graph.showGraph();
-    graph.bfs("A", "C");
+    graph.insertEdge("A","C",3);
+    graph.insertEdge("C","D",3);
+    graph.insertEdge("A","D",5);
     
-    generateMatrix(graph.getSize(), graph);
+    graph.showGraph();
+    cout << endl;
+    graph.dijkstra("A","C");
+    
+    
     return 0;
 }
 

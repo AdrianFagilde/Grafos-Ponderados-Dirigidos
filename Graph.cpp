@@ -246,7 +246,7 @@ void Graph::bfs(const string& src, const string& dest) const
         int u = q.front();
         q.pop();
 
-        cout << ' ' << vertexList[u].getLabel() << endl;
+        cout << ' ' << vertexList[u].getLabel() << " - " << vertexList[u].edges[0].first << endl;
 
         if (u == dest_idx)
             return;
@@ -265,47 +265,69 @@ void Graph::bfs(const string& src, const string& dest) const
 }
 
 
-void Graph::shortestPaths(const string& src) const
+void Graph::dijkstra(const string& src, const string& dest) const
 {
-    typedef pair<int,int> vtx;
+	string letter;
+	vector <string> vertices;
+    typedef pair<int,int> vtx; // vertices 
     priority_queue<vtx,
                    vector<vtx>,
-                   greater<vtx> > pq;
+                   greater<vtx> > pq; // no se todavia 
 
     vector<int> dist(size, INF);
 
-    int src_idx = getIndex(src);
-    if (src_idx == -1) return;
+    int src_idx = getIndex(src),
+        dest_idx = getIndex(dest);
+    if (src_idx == -1 ||
+        dest_idx == -1)
+        return;
 
-    dist[src_idx] = 0;
-    pq.push(make_pair(0, src_idx));
+    dist[src_idx] = 0; // inicializo el vector distancias
+    pq.push(make_pair(0, src_idx)); // push a el 0 y el valor a buscar
 
+	
     while (!pq.empty())
     {
-        int u = pq.top().second;
-        pq.pop();
-
-        for (int i ; i < vertexList[u].edges.size(); i++)
+        int u = pq.top().second; // obtenemos el mas alto
+        pq.pop(); // borramos en mas alto  
+        
+        if (u == dest_idx){
+        	vertices.push_back(getIndexLabel(u));
+        	break;
+		}
+            
+		
+        for (int i = 0 ; i < vertexList[u].edges.size() ; i++) // va recorrer la cantidad de conexiones
         {
-            int v = getIndex(vertexList[u].edges[i].second.getLabel());
-            int wt = vertexList[u].edges[i].first;
+            int v = getIndex(vertexList[u].edges[i].second.getLabel()); // indice de el vertice 
+            int wt = vertexList[u].edges[i].first; // ponderacion de la conexion
 
-            if (dist[v] > dist[u] + wt)
+            if (dist[v] > dist[u] + wt) // si la distacia en v es menor a  [u] + wt
             {
-                dist[v] = dist[u] + wt;
+                dist[v] = dist[u] + wt; // 
                 pq.push(make_pair(dist[v], v));
-            }
+                cout << vertexList[u].getLabel();
+                vertices.push_back(vertexList[u].getLabel());
+                cout << " --> [" << vertexList[u].edges[i].second.getLabel()
+                 << ", " << dist[v] << ']' ;
+                 
+                cout << endl;
+            }   
         }
+        
     }
 
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < vertices.size() ; i++)
     {
-        cout << '\t' << vertexList[i].getLabel();
-        if (dist[i] == INF)
-            cout << '\t' << '-' << endl;
-        else
-            cout << '\t' << dist[i] << endl;
+        if(i == 0){
+        	cout << vertices.at(i) << "-->" ;
+        	letter = vertices.at(i);
+		}
+		if(i > 0 && vertices.at(i).compare(letter) != 0){
+			cout << vertices.at(i) << "-->" ;
+		}
     }
+    cout << dist[getIndex(vertices.at(vertices.size() - 1))];
     cout << endl;
 }
 
@@ -318,7 +340,6 @@ int Graph::getIndex(const string& v) const
 
     return -1;
 }
-
 std::string Graph::getIndexLabel(int index) const
 {
 	return vertexList[index].getLabel();

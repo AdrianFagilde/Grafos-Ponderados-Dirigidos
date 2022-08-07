@@ -42,7 +42,7 @@ class Graph
                         int& wt) const;
         bool removeVertex(const std::string& v1);
         bool removeEdge(const std::string& v1, const std::string& v2);
-
+		
         void clear();
 
         bool empty() const;
@@ -52,15 +52,13 @@ class Graph
 
         void bfs(const std::string& src,
                  const std::string& dest) const;
-        void shortestPaths(const std::string& src) const;
-        
-        void generateMatrix(int size) const;
-                
+        void dijkstra(const std::string& src, const std::string& dest) const;
         std::string getIndexLabel(int index) const;
 		
 		int getSize (){
 			return size;
 		}
+		
     private:
         int getIndex(const std::string& v) const;
 
