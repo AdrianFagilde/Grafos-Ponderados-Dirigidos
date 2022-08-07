@@ -12,18 +12,32 @@ void printMatrix(int matrix[][10], int size) {
     cout<<endl;
   }
 }
-int max(int a,int b) {
-	if(a>b)
+int max(int a, int b) {
+	if(a > b)
 	 return(a); else
 	 return(b);
 }
-void warshal(int matrix[][10], int size, Graph graph) {
-	
-}
 
-void generateMatrix(int size, Graph graph) // number of vertex
+int main()
 {
-	int matrix[size][10], wt;
+    Graph graph(100);
+    Graph::Vertex *vertex;
+	int wt = 0;
+    graph.insertVertex("A");
+    graph.insertVertex("B");
+    graph.insertVertex("C");
+    graph.insertVertex("D");
+    graph.insertEdge("A","A",0);
+    graph.insertEdge("A","B",4);
+    graph.insertEdge("B","D",4);
+    graph.insertEdge("A","C",3);
+    graph.insertEdge("C","D",3);
+    graph.insertEdge("A","D",5);
+    graph.showGraph();
+    int size = graph.getSize();
+    int matrix[size][10];
+    
+    // cargando matriz para warshall
 	for (int i = 0; i < size; i++){
 		for(int j = 0; j < size; j++){
 			if(graph.searchEdge(graph.getIndexLabel(i), graph.getIndexLabel(j), wt)){
@@ -74,26 +88,9 @@ void generateMatrix(int size, Graph graph) // number of vertex
 			}
 		}
 	}
-}
-
-int main()
-{
-    Graph graph(100);
-    Graph::Vertex *vertex;
-	int wt = 0;
-    graph.insertVertex("A");
-    graph.insertVertex("B");
-    graph.insertVertex("C");
-    graph.insertVertex("D");
-    graph.insertEdge("A","A",0);
-    graph.insertEdge("A","B",4);
-    graph.insertEdge("B","D",4);
-    graph.insertEdge("A","C",3);
-    graph.insertEdge("C","D",3);
-    graph.insertEdge("A","D",5);
-    
-    graph.showGraph();
     cout << endl;
+
+	// algoritmo dijkstra
     graph.dijkstra("A","C");
     
     
