@@ -319,3 +319,8 @@ int Graph::getIndex(const string& v) const
     return -1;
 }
 
+std::string Graph::getIndexLabel(int index) const
+{
+	return vertexList[index].getLabel();
+}
+
