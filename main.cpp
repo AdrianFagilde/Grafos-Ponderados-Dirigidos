@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <stdlib.h>
+#include <conio.h>
 #include "Graph.h"
 #include "Files.h"
 
@@ -39,6 +41,9 @@ int main()
 	int size = graph.getSize();
     int matrix[size][10];
 	 // cargando matriz para warshall
+	while(true){
+		
+	
 	for (int i = 0; i < size; i++){
 		for(int j = 0; j < size; j++){
 			if(graph.searchEdge(graph.getIndexLabel(i), graph.getIndexLabel(j), wt)){
@@ -94,11 +99,49 @@ int main()
     graph.showGraph();
 
     cout << endl;
-
-	// algoritmo dijkstra
-    graph.dijkstra("A","C");
     
-    
+    cout<<"Que operacion desea realizar?"<<endl;
+    cout<<"1- Eliminar un nodo por teclado"<<endl;
+    cout<<"2- Buscar ruta optima entre 2 nodos insertados por teclado"<<endl;
+    bool ward2 = false;
+    while(true){
+    	if(kbhit()){
+			char key = getch();
+			string node, nodeF;
+			switch(int(key)){
+				case 49:
+					cout<<"ingrese el nodo que desea eliminar (mayusculas sensibles)"<<endl;
+					fflush(stdin);
+					cin>>node;
+					fflush(stdin);
+					if(graph.removeVertex(node)){
+						cout<<"Nodo eliminado"<<endl<<endl;
+					} else {
+						cout<<"Nodo no encontrado"<<endl<<endl;
+					}
+					ward2 = true;
+					break;
+				case 50:
+					cout<<"Ingrese el nodo inicial de la ruta (mayusculas sensibles)"<<endl;
+					fflush(stdin);
+					cin>>node;
+					fflush(stdin);
+					cout<<"Ingrese el nodo final o de llegada (mayusculas sensibles)"<<endl;
+					fflush(stdin);
+					cin>>nodeF;
+					fflush(stdin);
+					graph.dijkstra(node,nodeF);
+					ward2 = true;
+					break;
+			}
+			if(ward2){
+				break;
+			}
+		}
+	}
+	system("pause");
+    system("cls");
+}
     return 0;
 }
 
