@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 #include "Graph.h"
+#include "Files.h"
+
+// Adrian Fagilde 27.638.256
 
 using namespace std;
 
@@ -20,24 +23,22 @@ int max(int a, int b) {
 
 int main()
 {
-    Graph graph(100);
-    Graph::Vertex *vertex;
-	int wt = 0;
-    graph.insertVertex("A");
-    graph.insertVertex("B");
-    graph.insertVertex("C");
-    graph.insertVertex("D");
-    graph.insertEdge("A","A",0);
-    graph.insertEdge("A","B",4);
-    graph.insertEdge("B","D",4);
-    graph.insertEdge("A","C",3);
-    graph.insertEdge("C","D",3);
-    graph.insertEdge("A","D",5);
-    graph.showGraph();
-    int size = graph.getSize();
+	Files file;
+	file.read();	
+	int wt;
+	Graph graph(100);
+	Graph::Vertex *vertex;
+	
+
+	graph.loadVertices(file.getVertices());	
+	
+	cout << endl;
+	
+	graph.loadEdge(file.getInits(),file.getEnds(),file.getValues());  
+
+	int size = graph.getSize();
     int matrix[size][10];
-    
-    // cargando matriz para warshall
+	 // cargando matriz para warshall
 	for (int i = 0; i < size; i++){
 		for(int j = 0; j < size; j++){
 			if(graph.searchEdge(graph.getIndexLabel(i), graph.getIndexLabel(j), wt)){
@@ -88,6 +89,10 @@ int main()
 			}
 		}
 	}
+	cout << endl;
+	
+    graph.showGraph();
+
     cout << endl;
 
 	// algoritmo dijkstra
