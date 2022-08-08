@@ -15,18 +15,30 @@ void printMatrix(int matrix[][10], int size) {
     cout<<endl;
   }
 }
-int max(int a,int b) {
-	if(a>b)
+int max(int a, int b) {
+	if(a > b)
 	 return(a); else
 	 return(b);
 }
-void warshal(int matrix[][10], int size, Graph graph) {
-	
-}
 
-void generateMatrix(int size, Graph graph) // number of vertex
+int main()
 {
-	int matrix[size][10], wt;
+	Files file;
+	file.read();	
+	int wt;
+	Graph graph(100);
+	Graph::Vertex *vertex;
+	
+
+	graph.loadVertices(file.getVertices());	
+	
+	cout << endl;
+	
+	graph.loadEdge(file.getInits(),file.getEnds(),file.getValues());  
+
+	int size = graph.getSize();
+    int matrix[size][10];
+	 // cargando matriz para warshall
 	for (int i = 0; i < size; i++){
 		for(int j = 0; j < size; j++){
 			if(graph.searchEdge(graph.getIndexLabel(i), graph.getIndexLabel(j), wt)){
@@ -77,22 +89,13 @@ void generateMatrix(int size, Graph graph) // number of vertex
 			}
 		}
 	}
-}
-
-int main()
-{
-	Files file;
-	file.read();	
-	int wt = 0;
-	int size = file.getMax();
-	Graph graph(100);
-	Graph::Vertex *vertex;	
-	cout << "Vertices = " << endl;
-	graph.loadVertices(file.getVertices());	
 	cout << endl;
-	graph.loadEdge(file.getInits(),file.getEnds(),file.getValues());  
+	
     graph.showGraph();
+
     cout << endl;
+
+	// algoritmo dijkstra
     graph.dijkstra("A","C");
     
     
