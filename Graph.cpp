@@ -1,7 +1,6 @@
 #include <iostream>
 #include <queue>
 #include "Graph.h"
-
 using namespace std;
 
 
@@ -343,5 +342,23 @@ int Graph::getIndex(const string& v) const
 std::string Graph::getIndexLabel(int index) const
 {
 	return vertexList[index].getLabel();
+}
+
+void Graph::loadVertices(const vector<string> vertices){
+
+	for(int i = 0 ; i < vertices.size() ; i++){
+		this->insertVertex(vertices.at(i));
+	}
+	
+}
+
+
+void Graph::loadEdge(const vector<string> inits,const vector<string> ends,const vector<int> values){
+	
+	for(int i = 0 ; i < values.size() ; i++){
+		
+		this->insertEdge(inits.at(i),ends.at(i),values[i]);
+	}
+	
 }
 

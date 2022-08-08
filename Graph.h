@@ -6,7 +6,6 @@
 #include <vector>
 
 
-
 class Graph
 {
     static const int DEFAULT_MAX_SIZE = 10;
@@ -47,7 +46,7 @@ class Graph
 
         bool empty() const;
         bool full() const;
-
+		
         void showGraph() const;
 
         void bfs(const std::string& src,
@@ -58,6 +57,10 @@ class Graph
 		int getSize (){
 			return size;
 		}
+		
+		
+		void loadVertices(const std::vector<std::string> vertices);
+		void loadEdge(const std::vector<std::string> inits,const std::vector<std::string> ends,const std::vector<int> values);
 		
     private:
         int getIndex(const std::string& v) const;

@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 #include "Graph.h"
+#include "Files.h"
+
+// Adrian Fagilde 27.638.256
 
 using namespace std;
 
@@ -78,20 +81,16 @@ void generateMatrix(int size, Graph graph) // number of vertex
 
 int main()
 {
-    Graph graph(100);
-    Graph::Vertex *vertex;
+	Files file;
+	file.read();	
 	int wt = 0;
-    graph.insertVertex("A");
-    graph.insertVertex("B");
-    graph.insertVertex("C");
-    graph.insertVertex("D");
-    graph.insertEdge("A","A",0);
-    graph.insertEdge("A","B",4);
-    graph.insertEdge("B","D",4);
-    graph.insertEdge("A","C",3);
-    graph.insertEdge("C","D",3);
-    graph.insertEdge("A","D",5);
-    
+	int size = file.getMax();
+	Graph graph(100);
+	Graph::Vertex *vertex;	
+	cout << "Vertices = " << endl;
+	graph.loadVertices(file.getVertices());	
+	cout << endl;
+	graph.loadEdge(file.getInits(),file.getEnds(),file.getValues());  
     graph.showGraph();
     cout << endl;
     graph.dijkstra("A","C");
